@@ -209,75 +209,79 @@
 
 ## 10. Operações com colunas
 
-Instrução	Estrutura	Descrição
-df['nova'] = ...	DataFrame	Cria coluna
-df.assign(nova=...)	DataFrame	Cria colunas
-df.insert(...)	DataFrame	Insere coluna em posição
-df.drop(columns=['x'])	DataFrame	Remove coluna
-df.rename(columns={'x':'y'})	DataFrame	Renomeia coluna
-df.columns = [...]	DataFrame	Redefine nomes
-df.columns.str.lower()	Index	Coloca nomes em minúsculo
-df.columns.str.upper()	Index	Coloca nomes em maiúsculo
-df.columns.str.strip()	Index	Remove espaços
-df.columns.str.replace(...)	Index	Substitui caracteres
-df.pop('coluna')	DataFrame	Remove e retorna coluna
-df.filter(regex=...)	DataFrame	Seleciona colunas por padrão
-df.select_dtypes(...)	DataFrame	Seleciona por tipo
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df['nova'] = ... | DataFrame | Cria coluna |
+| df.assign(nova=...) | DataFrame | Cria colunas |
+| df.insert(...) | DataFrame | Insere coluna em posição |
+| df.drop(columns=['x']) | DataFrame | Remove coluna |
+| df.rename(columns={'x':'y'}) | DataFrame | Renomeia coluna |
+| df.columns = [...] | DataFrame | Redefine nomes |
+| df.columns.str.lower() | Index | Coloca nomes em minúsculo |
+| df.columns.str.upper() | Index | Coloca nomes em maiúsculo |
+| df.columns.str.strip() | Index | Remove espaços |
+| df.columns.str.replace(...) | Index | Substitui caracteres |
+| df.pop('coluna') | DataFrame | Remove e retorna coluna |
+| df.filter(regex=...) | DataFrame | Seleciona colunas por padrão |
+| df.select_dtypes(...) | DataFrame | Seleciona por tipo |
 
 ## 11. Operadores de colunas
 
-Instrução	Estrutura	Descrição
-df['a'] + df['b']	DataFrame / Series	Soma
-df['a'] - df['b']	DataFrame / Series	Subtração
-df['a'] * df['b']	DataFrame / Series	Multiplicação
-df['a'] / df['b']	DataFrame / Series	Divisão
-df['a'] // df['b']	Series	Divisão inteira
-df['a'] % df['b']	Series	Módulo
-df['a'] ** 2	Series	Potência
-df['a'].abs()	Series	Valor absoluto
-df['a'].round(2)	Series	Arredondamento
-df['a'].clip(0,100)	Series	Limita valores
-df['a'].add(df['b'])	Series	Soma
-df['a'].sub(df['b'])	Series	Subtração
-df['a'].mul(df['b'])	Series	Multiplicação
-df['a'].div(df['b'])	Series	Divisão
-df.eval('total = preco * quantidade')	DataFrame	Operações com expressão
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df['a'] + df['b'] | DataFrame / Series | Soma |
+| df['a'] - df['b'] | DataFrame / Series | Subtração |
+| df['a'] * df['b'] | DataFrame / Series | Multiplicação |
+| df['a'] / df['b'] | DataFrame / Series | Divisão |
+| df['a'] // df['b'] | Series | Divisão inteira |
+| df['a'] % df['b'] | Series | Módulo |
+| df['a'] ** 2 | Series | Potência |
+| df['a'].abs() | Series | Valor absoluto |
+| df['a'].round(2) | Series | Arredondamento |
+| df['a'].clip(0,100) | Series | Limita valores |
+| df['a'].add(df['b']) | Series | Soma |
+| df['a'].sub(df['b']) | Series | Subtração |
+| df['a'].mul(df['b']) | Series | Multiplicação |
+| df['a'].div(df['b']) | Series | Divisão |
+| df.eval('total = preco * quantidade') | DataFrame | Operações com expressão |
 
 ## 12. Operações matemáticas e estatísticas
 
-Instrução	Estrutura	Descrição
-df.sum()	DataFrame / Series	Soma
-df.mean()	DataFrame / Series	Média
-df.median()	DataFrame / Series	Mediana
-df.mode()	DataFrame / Series	Moda
-df.min()	DataFrame / Series	Mínimo
-df.max()	DataFrame / Series	Máximo
-df.std()	DataFrame / Series	Desvio padrão
-df.var()	DataFrame / Series	Variância
-df.sem()	DataFrame / Series	Erro padrão
-df.skew()	DataFrame / Series	Assimetria
-df.kurt()	DataFrame / Series	Curtose
-df.quantile(0.25)	DataFrame / Series	Percentil
-df.cumsum()	DataFrame / Series	Soma acumulada
-df.cumprod()	DataFrame / Series	Produto acumulado
-df.cummin()	DataFrame / Series	Mínimo acumulado
-df.cummax()	DataFrame / Series	Máximo acumulado
-df.pct_change()	Series / DataFrame	Variação percentual
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df.sum() | DataFrame / Series | Soma
+| df.mean() | DataFrame / Series | Média |
+| df.median() | DataFrame / Series | Mediana |
+| df.mode() | DataFrame / Series | Moda |
+| df.min() | DataFrame / Series | Mínimo |
+| df.max() | DataFrame / Series | Máximo |
+| df.std() | DataFrame / Series | Desvio padrão |
+| df.var() | DataFrame / Series | Variância |
+| df.sem() | DataFrame / Series | Erro padrão |
+| df.skew() | DataFrame / Series | Assimetria |
+| df.kurt() | DataFrame / Series | Curtose |
+| df.quantile(0.25) | DataFrame / Series | Percentil |
+| df.cumsum() | DataFrame / Series | Soma acumulada |
+| df.cumprod() | DataFrame / Series | Produto acumulado |
+| df.cummin() | DataFrame / Series | Mínimo acumulado |
+| df.cummax() | DataFrame / Series | Máximo acumulado |
+| df.pct_change() | Series / DataFrame | Variação percentual |
 
 ## 13. Agregação de dados
 
-Instrução	Estrutura	Descrição
-df.sum()	DataFrame / Series	Soma
-df.mean()	DataFrame / Series	Média
-df.count()	DataFrame / Series	Contagem
-df.min()	DataFrame / Series	Mínimo
-df.max()	DataFrame / Series	Máximo
-df.agg('sum')	DataFrame / Series	Agregação
-df.agg(['sum','mean','max'])	DataFrame	Múltiplas agregações
-df.agg({'vendas':'sum','preco':'mean'})	DataFrame	Agregações diferentes
-s.agg(...)	Series	Agregação da Series
-df.value_counts()	DataFrame / Series	Frequência
-df.nunique()	DataFrame / Series	Quantidade de distintos
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df.sum() | DataFrame / Series | Soma |
+| df.mean() | DataFrame / Series | Média |
+| df.count() | DataFrame / Series | Contagem |
+| df.min() | DataFrame / Series | Mínimo |
+| df.max() | DataFrame / Series | Máximo |
+| df.agg('sum') | DataFrame / Series | Agregação |
+| df.agg(['sum','mean','max']) | DataFrame | Múltiplas agregações |
+| df.agg({'vendas':'sum','preco':'mean'}) | DataFrame | Agregações diferentes |
+| s.agg(...) | Series | Agregação da Series |
+| df.value_counts() | DataFrame / Series | Frequência |
+| df.nunique() | DataFrame / Series | Quantidade de distintos |
 
 ## 14. Agrupamento — groupby
 
