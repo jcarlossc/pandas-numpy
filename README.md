@@ -1075,3 +1075,1221 @@ to_json()
 ```
 
 Essa estrutura já é uma base de referência bastante completa para Pandas, indo além de um simples “cheat sheet” e cobrindo justamente as operações que você tende a encontrar em projetos reais de ETL, análise exploratória, tratamento de dados, Data Warehouse e APIs de dados.
+
+# Numpy
+
+## 1. Importação e criação de arrays
+
+### import numpy as np — importa NumPy.
+
+| Instrução | Descrição |
+| --------- | --------- |
+| np.array([1, 2, 3]) | cria um ndarray. |
+| np.array([[1, 2], [3, 4]]) | cria array multidimensional. |
+| np.asarray(...) | converte para array sem cópia desnecessária quando possível. |
+| np.asanyarray(...) | semelhante a asarray, preservando subclasses. |
+| np.fromiter(...) | cria array a partir de um iterável. |
+| np.fromfunction(...) | cria array usando uma função. |
+| np.frombuffer(...) | cria array a partir de buffer. |
+| np.fromstring(...) | cria array a partir de string. |
+| np.zeros(5) | array preenchido com zeros. |
+| np.zeros((3, 4)) | matriz 3 × 4 de zeros. |
+| np.ones(5) | array preenchido com 1. |
+| np.ones((3, 4)) | matriz de 1. |
+| np.empty(5) | array não inicializado. |
+| np.empty((3, 4)) | matriz não inicializada. |
+| np.full(5, 10) | array preenchido com 10. |
+| np.full((3, 3), 7) | matriz preenchida com 7. |
+| np.eye(3) | matriz identidade. |
+| np.identity(3) | matriz identidade. |
+| np.diag([1, 2, 3]) | cria matriz diagonal. |
+| np.tri(3) | matriz triangular inferior. |
+| np.ones_like(a) | array de 1 com formato de outro. |
+| np.zeros_like(a) | array de zeros com formato de outro. |
+| np.empty_like(a) | array vazio com formato de outro. |
+| np.full_like(a, 10) | array preenchido mantendo formato. |
+
+## 2. Arrays e propriedades fundamentais
+
+a.ndim — número de dimensões.
+a.shape — dimensões do array.
+a.size — quantidade total de elementos.
+a.dtype — tipo dos elementos.
+a.itemsize — tamanho em bytes de cada elemento.
+a.nbytes — memória ocupada pelo array.
+a.strides — deslocamento em bytes entre elementos.
+a.flags — informações sobre memória/layout.
+a.T — transposição.
+a.real — parte real.
+a.imag — parte imaginária.
+a.flat — iterador sobre todos os elementos.
+a.base — verifica se o array é uma view de outro array.
+
+Exemplo:
+
+import numpy as np
+
+a = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+])
+
+print(a.ndim)
+print(a.shape)
+print(a.size)
+print(a.dtype)
+3. Tipos de dados — dtype
+np.int8
+np.int16
+np.int32
+np.int64
+np.uint8
+np.uint16
+np.uint32
+np.uint64
+np.float16
+np.float32
+np.float64
+np.longdouble
+np.complex64
+np.complex128
+np.bool_
+np.str_
+np.bytes_
+np.object_
+
+Conversão:
+
+a.astype(np.int64) — converte para inteiro.
+a.astype(np.float64) — converte para float.
+a.astype(np.bool_) — converte para booleano.
+a.astype(str) — converte para string.
+4. Criação de sequências numéricas
+np.arange(10) — sequência de 0 a 9.
+np.arange(0, 10, 2) — sequência com passo 2.
+np.linspace(0, 10, 5) — 5 valores igualmente espaçados.
+np.logspace(1, 3, 5) — escala logarítmica.
+np.geomspace(1, 1000, 5) — progressão geométrica.
+np.r_ — concatenação por sintaxe de índices.
+np.c_ — concatenação por colunas.
+5. Números aleatórios
+
+O módulo moderno recomendado é np.random.Generator.
+
+rng = np.random.default_rng(42) — cria gerador reproduzível.
+rng.random(10) — números aleatórios entre 0 e 1.
+rng.random((3, 4)) — matriz aleatória.
+rng.integers(0, 100, 10) — inteiros aleatórios.
+rng.uniform(0, 10, 10) — distribuição uniforme.
+rng.normal(0, 1, 10) — distribuição normal.
+rng.standard_normal(10) — normal padrão.
+rng.binomial(10, 0.5, 100) — distribuição binomial.
+rng.poisson(3, 100) — distribuição Poisson.
+rng.exponential(2, 100) — distribuição exponencial.
+rng.choice([1, 2, 3], size=10) — amostragem.
+rng.choice(a, size=10, replace=False) — amostragem sem reposição.
+rng.shuffle(a) — embaralha.
+rng.permutation(a) — retorna permutação.
+rng.integers(...) — gera inteiros aleatórios.
+6. Indexação
+a[0] — primeiro elemento.
+a[-1] — último elemento.
+a[1:5] — slicing.
+a[:5] — primeiros elementos.
+a[5:] — a partir do índice 5.
+a[::2] — elementos alternados.
+a[::-1] — array invertido.
+a[0, 1] — elemento de matriz.
+a[:, 0] — primeira coluna.
+a[0, :] — primeira linha.
+a[:, 1:3] — intervalo de colunas.
+a[..., 0] — seleção usando ellipsis.
+7. Fancy indexing
+a[[0, 2, 4]] — seleciona posições específicas.
+a[[0, 2], :] — seleciona linhas específicas.
+a[:, [0, 2]] — seleciona colunas específicas.
+a[[0, 1], [2, 3]] — seleciona pares de posições.
+
+Exemplo:
+
+a = np.array([10, 20, 30, 40, 50])
+
+resultado = a[[0, 2, 4]]
+
+Resultado:
+
+[10 30 50]
+8. Boolean indexing
+a[a > 10] — valores maiores que 10.
+a[a == 10] — valores iguais a 10.
+a[a != 10] — valores diferentes.
+a[(a > 10) & (a < 50)] — AND.
+a[(a < 10) | (a > 50)] — OR.
+a[~(a > 10)] — NOT.
+
+Funções relacionadas:
+
+np.where(...)
+np.nonzero(...)
+np.flatnonzero(...)
+np.argwhere(...)
+9. where
+np.where(a > 10) — retorna posições.
+np.where(a > 10, 1, 0) — condição → 1 ou 0.
+np.where(a > 10, a, 0) — mantém valores ou substitui.
+np.where(a > 10, "alto", "baixo") — classificação condicional.
+
+Exemplo:
+
+resultado = np.where(
+    vendas > 1000,
+    "Alta",
+    "Baixa",
+)
+10. nonzero, argwhere e posições
+np.nonzero(a) — posições de elementos diferentes de zero.
+np.flatnonzero(a) — posições em array achatado.
+np.argwhere(a) — índices dos elementos que satisfazem condição.
+np.argwhere(a > 10) — posições dos valores > 10.
+11. Reshape
+a.reshape(2, 3) — altera formato.
+a.reshape((2, 3)) — mesma operação.
+a.reshape(-1) — transforma em 1D.
+a.reshape(2, -1) — NumPy calcula dimensão automaticamente.
+a.ravel() — achata array.
+a.flatten() — cria cópia achatada.
+np.reshape(a, ...) — versão funcional.
+
+Diferença importante:
+
+ravel()
+    geralmente retorna uma view quando possível
+
+flatten()
+    sempre retorna uma cópia
+12. Transposição
+a.T — transposta.
+np.transpose(a) — transpõe.
+np.transpose(a, axes=(1, 0)) — define ordem dos eixos.
+np.swapaxes(a, 0, 1) — troca dois eixos.
+np.moveaxis(a, 0, 2) — move eixo.
+13. Alteração de dimensões
+np.expand_dims(a, axis=0) — adiciona dimensão.
+np.expand_dims(a, axis=1) — adiciona eixo.
+np.squeeze(a) — remove dimensões de tamanho 1.
+a[:, np.newaxis] — adiciona eixo.
+a[None, :] — adiciona dimensão.
+14. Broadcasting
+
+Broadcasting permite realizar operações entre arrays de formatos diferentes.
+
+a + 10
+a * 2
+a + b
+a * b
+a + np.array([1, 2, 3])
+
+Exemplo:
+
+a = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+])
+
+b = np.array([1, 2, 3])
+
+resultado = a + b
+
+Resultado:
+
+[[11 22 33]
+ [41 52 63]]
+
+Conceitos relacionados:
+
+broadcasting
+alinhamento de dimensões
+expansão implícita
+operações vetorizadas
+15. Concatenação
+np.concatenate([a, b]) — concatena.
+np.concatenate([a, b], axis=0) — concatena por linhas.
+np.concatenate([a, b], axis=1) — concatena por colunas.
+np.stack([a, b]) — cria novo eixo.
+np.vstack([a, b]) — empilha verticalmente.
+np.hstack([a, b]) — empilha horizontalmente.
+np.dstack([a, b]) — empilha na terceira dimensão.
+np.column_stack([a, b]) — empilha como colunas.
+np.row_stack([a, b]) — empilha como linhas.
+16. Divisão de arrays
+np.split(a, 2) — divide em partes iguais.
+np.array_split(a, 3) — permite partes desiguais.
+np.hsplit(a, 2) — divide horizontalmente.
+np.vsplit(a, 2) — divide verticalmente.
+np.dsplit(a, 2) — divide no terceiro eixo.
+17. Repetição
+np.repeat(a, 2) — repete elementos.
+np.repeat(a, [1, 2, 3]) — repetições diferentes.
+np.tile(a, 3) — repete estrutura inteira.
+np.tile(a, (2, 3)) — repete em várias dimensões.
+18. Operações aritméticas
+np.add(a, b) — soma.
+np.subtract(a, b) — subtração.
+np.multiply(a, b) — multiplicação.
+np.divide(a, b) — divisão.
+np.floor_divide(a, b) — divisão inteira.
+np.mod(a, b) — módulo.
+np.power(a, 2) — potência.
+np.sqrt(a) — raiz quadrada.
+np.square(a) — quadrado.
+np.cbrt(a) — raiz cúbica.
+np.reciprocal(a) — inverso.
+
+Operadores também funcionam:
+
+a + b
+a - b
+a * b
+a / b
+a // b
+a % b
+a ** 2
+19. Funções matemáticas
+np.abs(a) — valor absoluto.
+np.absolute(a) — valor absoluto.
+np.sign(a) — sinal.
+np.exp(a) — exponencial.
+np.exp2(a) — 2 elevado a a.
+np.expm1(a) — exp(x) - 1.
+np.log(a) — logaritmo natural.
+np.log2(a) — logaritmo base 2.
+np.log10(a) — logaritmo base 10.
+np.log1p(a) — log(1+x).
+np.sqrt(a) — raiz quadrada.
+np.square(a) — quadrado.
+np.reciprocal(a) — inverso.
+20. Funções trigonométricas
+np.sin(a)
+np.cos(a)
+np.tan(a)
+np.arcsin(a)
+np.arccos(a)
+np.arctan(a)
+np.arctan2(y, x)
+np.sinh(a)
+np.cosh(a)
+np.tanh(a)
+np.degrees(a) — radianos → graus.
+np.radians(a) — graus → radianos.
+21. Arredondamento
+np.round(a, 2) — arredonda.
+np.around(a, 2) — arredonda.
+np.floor(a) — arredonda para baixo.
+np.ceil(a) — arredonda para cima.
+np.trunc(a) — remove parte decimal.
+np.fix(a) — arredondamento em direção a zero.
+22. Agregações
+np.sum(a) — soma.
+np.prod(a) — produto.
+np.mean(a) — média.
+np.median(a) — mediana.
+np.std(a) — desvio padrão.
+np.var(a) — variância.
+np.min(a) — mínimo.
+np.max(a) — máximo.
+np.ptp(a) — amplitude.
+np.percentile(a, 50) — percentil.
+np.quantile(a, 0.5) — quantil.
+np.average(a) — média ponderada.
+np.sum(a, axis=0) — soma por coluna.
+np.sum(a, axis=1) — soma por linha.
+23. Estatística
+np.mean(a)
+np.median(a)
+np.average(a)
+np.std(a)
+np.var(a)
+np.percentile(a, 25)
+np.percentile(a, 50)
+np.percentile(a, 75)
+np.quantile(a, 0.25)
+np.quantile(a, 0.75)
+np.ptp(a)
+np.corrcoef(a, b) — correlação.
+np.cov(a, b) — covariância.
+24. Acumulados
+np.cumsum(a) — soma acumulada.
+np.cumprod(a) — produto acumulado.
+np.minimum.accumulate(a) — mínimo acumulado.
+np.maximum.accumulate(a) — máximo acumulado.
+np.add.accumulate(a) — acumulação genérica.
+
+Exemplo:
+
+a = np.array([10, 20, 30, 40])
+
+np.cumsum(a)
+
+Resultado:
+
+[ 10  30  60 100]
+25. Mínimos e máximos
+np.min(a)
+np.max(a)
+np.argmin(a) — posição do mínimo.
+np.argmax(a) — posição do máximo.
+np.minimum(a, b) — mínimo elemento a elemento.
+np.maximum(a, b) — máximo elemento a elemento.
+np.nanmin(a) — mínimo ignorando NaN.
+np.nanmax(a) — máximo ignorando NaN.
+26. Ordenação
+np.sort(a) — retorna array ordenado.
+a.sort() — ordena o próprio array.
+np.argsort(a) — retorna índices da ordenação.
+np.lexsort(...) — ordenação por múltiplas chaves.
+np.partition(a, k) — particionamento.
+np.argpartition(a, k) — índices do particionamento.
+27. Busca e localização
+np.argmax(a)
+np.argmin(a)
+np.where(condition)
+np.nonzero(a)
+np.argwhere(condition)
+np.searchsorted(a, value) — posição de inserção.
+np.flatnonzero(a) — posições dos elementos não zero.
+28. Valores únicos
+np.unique(a) — valores únicos.
+np.unique(a, return_counts=True) — valores e frequências.
+np.unique(a, return_index=True) — valores e índices.
+np.unique(a, return_inverse=True) — mapeamento inverso.
+
+Exemplo:
+
+valores, contagens = np.unique(
+    a,
+    return_counts=True,
+)
+29. Valores ausentes — NaN
+np.nan
+np.isnan(a) — identifica NaN.
+np.isfinite(a) — verifica valores finitos.
+np.isinf(a) — verifica infinito.
+np.nan_to_num(a) — substitui NaN/infinito.
+np.nanmean(a) — média ignorando NaN.
+np.nanmedian(a) — mediana ignorando NaN.
+np.nanstd(a) — desvio padrão ignorando NaN.
+np.nanvar(a) — variância ignorando NaN.
+np.nansum(a) — soma ignorando NaN.
+np.nanmin(a) — mínimo ignorando NaN.
+np.nanmax(a) — máximo ignorando NaN.
+np.nanpercentile(a, 50) — percentil ignorando NaN.
+30. Comparações
+np.equal(a, b)
+np.not_equal(a, b)
+np.greater(a, b)
+np.greater_equal(a, b)
+np.less(a, b)
+np.less_equal(a, b)
+np.isclose(a, b) — comparação numérica com tolerância.
+np.allclose(a, b) — verifica se arrays são aproximadamente iguais.
+31. Operações lógicas
+np.logical_and(a, b)
+np.logical_or(a, b)
+np.logical_not(a)
+np.logical_xor(a, b)
+np.all(a) — todos verdadeiros.
+np.any(a) — pelo menos um verdadeiro.
+32. Operações bit a bit
+np.bitwise_and(a, b)
+np.bitwise_or(a, b)
+np.bitwise_xor(a, b)
+np.bitwise_not(a)
+np.left_shift(a, 2)
+np.right_shift(a, 2)
+33. Álgebra linear
+
+O módulo principal é np.linalg.
+
+np.linalg.inv(A) — inversa.
+np.linalg.det(A) — determinante.
+np.linalg.matrix_rank(A) — posto.
+np.linalg.solve(A, b) — resolve sistema linear.
+np.linalg.lstsq(A, b) — mínimos quadrados.
+np.linalg.eig(A) — autovalores/autovetores.
+np.linalg.eigh(A) — matrizes simétricas/Hermitianas.
+np.linalg.svd(A) — decomposição SVD.
+np.linalg.norm(A) — norma.
+np.linalg.qr(A) — decomposição QR.
+np.linalg.cholesky(A) — decomposição de Cholesky.
+np.linalg.pinv(A) — pseudoinversa.
+34. Multiplicação de matrizes
+np.dot(a, b) — produto.
+np.matmul(a, b) — multiplicação matricial.
+a @ b — operador de multiplicação matricial.
+np.vdot(a, b) — produto interno.
+np.inner(a, b) — produto interno.
+np.outer(a, b) — produto externo.
+np.kron(a, b) — produto de Kronecker.
+
+Exemplo:
+
+C = A @ B
+
+Para álgebra linear moderna, @ é geralmente a forma mais clara.
+
+35. Matrizes especiais
+np.eye(n) — identidade.
+np.identity(n) — identidade.
+np.diag(v) — diagonal.
+np.diagflat(v) — diagonal achatada.
+np.tril(A) — triangular inferior.
+np.triu(A) — triangular superior.
+np.vander(x) — matriz de Vandermonde.
+36. Geração de grades
+np.meshgrid(x, y) — cria grade cartesiana.
+np.mgrid[...] — cria grids densos.
+np.ogrid[...] — cria grids abertos.
+np.indices(...) — gera índices de uma grade.
+37. Manipulação de eixos
+np.expand_dims()
+np.squeeze()
+np.swapaxes()
+np.moveaxis()
+np.rollaxis() — operação mais antiga; normalmente prefira moveaxis.
+np.transpose()
+38. Rotação e deslocamento
+np.roll(a, 1) — desloca elementos.
+np.roll(a, 1, axis=0) — desloca por eixo.
+np.rot90(a) — rotaciona 90°.
+np.flip(a) — inverte.
+np.flipud(a) — flip vertical.
+np.fliplr(a) — flip horizontal.
+39. Matrizes diagonais e triangulares
+np.diag(A) — obtém diagonal.
+np.diag(v) — cria diagonal.
+np.diagonal(A) — obtém diagonal.
+np.triu(A) — triangular superior.
+np.tril(A) — triangular inferior.
+np.trace(A) — soma diagonal.
+40. Manipulação de memória e cópia
+a.copy() — cópia independente.
+a.view() — cria view.
+a.base — verifica array base.
+np.copy(a) — copia array.
+
+Conceito fundamental:
+
+VIEW
+→ compartilha memória
+
+COPY
+→ possui memória independente
+41. Views e slices
+a = np.array([10, 20, 30, 40])
+
+b = a[1:3]
+
+b normalmente é uma view de a.
+
+Já:
+
+b = a[1:3].copy()
+
+cria uma cópia independente.
+
+Isso é particularmente importante quando você está trabalhando com grandes volumes de dados.
+
+42. Funções universais — ufuncs
+
+O NumPy possui operações vetorizadas chamadas Universal Functions — ufuncs.
+
+Exemplos:
+
+np.add
+np.subtract
+np.multiply
+np.divide
+np.power
+np.sqrt
+np.exp
+np.log
+np.sin
+np.cos
+np.tan
+np.maximum
+np.minimum
+np.absolute
+
+A grande vantagem é evitar loops Python desnecessários.
+
+Em vez de:
+
+resultado = []
+
+for x in dados:
+    resultado.append(x * 2)
+
+use:
+
+resultado = dados * 2
+43. vectorize
+np.vectorize(func) — transforma uma função Python em uma interface vetorizada.
+
+Exemplo:
+
+def classificar(x):
+    return "alto" if x > 100 else "baixo"
+
+func = np.vectorize(classificar)
+
+resultado = func(a)
+
+Importante: np.vectorize() melhora a conveniência da sintaxe, mas não é necessariamente uma otimização de desempenho. Para performance, prefira ufuncs e operações vetorizadas nativas.
+
+44. Funções condicionais
+np.where()
+np.select()
+np.choose()
+np.piecewise()
+
+Exemplo:
+
+resultado = np.select(
+    [
+        vendas < 100,
+        vendas < 500,
+        vendas >= 500,
+    ],
+    [
+        "Baixa",
+        "Média",
+        "Alta",
+]
+)
+45. Interpolação
+np.interp(x, xp, fp) — interpolação linear.
+np.polynomial — ferramentas para polinômios.
+46. Polinômios
+np.polynomial.Polynomial
+np.polynomial.Chebyshev
+np.polynomial.Legendre
+np.polynomial.Hermite
+np.polynomial.Laguerre
+
+Operações relacionadas:
+
+fit()
+roots()
+deriv()
+integ()
+convert()
+47. Transformada de Fourier
+
+Módulo:
+
+np.fft
+
+Principais instruções:
+
+np.fft.fft() — FFT.
+np.fft.ifft() — transformada inversa.
+np.fft.fft2() — FFT 2D.
+np.fft.ifft2() — inversa 2D.
+np.fft.fftfreq() — frequências.
+np.fft.rfft() — FFT para sinais reais.
+np.fft.irfft() — inversa para sinais reais.
+np.fft.fftshift() — desloca componente zero.
+48. Números complexos
+np.real(z) — parte real.
+np.imag(z) — parte imaginária.
+np.conj(z) — conjugado.
+np.angle(z) — argumento.
+np.abs(z) — módulo.
+np.real_if_close(z) — converte para real quando apropriado.
+49. Datas e tempo
+
+O NumPy possui:
+
+np.datetime64
+np.timedelta64
+
+Exemplos:
+
+data = np.datetime64("2026-08-20")
+intervalo = np.timedelta64(7, "D")
+
+Operações:
+
+data + intervalo
+data - intervalo
+np.arange(...) com datetime64
+comparação de datas.
+50. Funções de calendário
+np.busday_count() — quantidade de dias úteis.
+np.is_busday() — verifica dia útil.
+np.busday_offset() — desloca dias úteis.
+
+Exemplo:
+
+inicio = np.datetime64("2026-08-20")
+fim = np.datetime64("2026-08-31")
+
+np.busday_count(inicio, fim)
+51. Estatística básica com pesos
+np.average(a, weights=w) — média ponderada.
+np.cov(a, weights=...) — dependendo do caso/versão.
+np.histogram(a) — distribuição de frequência.
+np.histogram2d(x, y) — histograma bidimensional.
+np.histogramdd(...) — multidimensional.
+52. Histogramas e distribuição
+np.histogram(a)
+np.histogram(a, bins=10)
+np.histogram(a, bins=[0, 10, 20, 30])
+np.histogram2d(x, y)
+np.histogramdd(data)
+
+Muito utilizados em EDA.
+
+53. Correlação e covariância
+np.corrcoef(x, y) — matriz de correlação.
+np.cov(x, y) — matriz de covariância.
+
+Exemplo:
+
+correlacao = np.corrcoef(
+    vendas,
+    publicidade,
+)[0, 1]
+54. Contagem
+np.count_nonzero(a) — conta valores diferentes de zero.
+np.count_nonzero(a > 10) — conta valores que satisfazem condição.
+np.unique(a, return_counts=True) — frequência de valores.
+55. Amostragem
+
+Com Generator:
+
+rng.choice()
+rng.integers()
+rng.permutation()
+rng.shuffle()
+
+Exemplo:
+
+rng = np.random.default_rng(42)
+
+amostra = rng.choice(
+    dados,
+    size=100,
+    replace=False,
+)
+56. Probabilidade e distribuições
+
+O módulo:
+
+np.random.Generator
+
+permite gerar amostras de distribuições como:
+
+uniforme
+normal
+binomial
+Poisson
+exponencial
+beta
+gamma
+lognormal
+multinomial
+hipergeométrica
+geométrica
+Weibull
+
+Exemplos:
+
+rng.normal(
+    loc=100,
+    scale=15,
+    size=1000,
+)
+rng.binomial(
+    n=10,
+    p=0.5,
+    size=1000,
+)
+57. Comparação de arrays
+np.array_equal(a, b) — igualdade exata.
+np.array_equiv(a, b) — equivalência por broadcasting.
+np.allclose(a, b) — igualdade aproximada.
+np.isclose(a, b) — comparação elemento a elemento.
+58. Operações de conjuntos
+
+Para arrays:
+
+np.unique()
+np.intersect1d()
+np.union1d()
+np.setdiff1d()
+np.setxor1d()
+np.isin()
+
+Exemplo:
+
+np.intersect1d(
+    clientes_janeiro,
+    clientes_fevereiro,
+)
+59. Arrays estruturados
+np.dtype([...])
+np.zeros(..., dtype=...)
+np.recarray
+np.core.records.fromarrays(...)
+
+São úteis quando se deseja representar estruturas tabulares diretamente com NumPy, embora para dados tabulares normalmente o Pandas seja mais apropriado.
+
+60. Leitura e gravação
+np.save() — salva .npy.
+np.load() — carrega .npy/outros formatos suportados.
+np.savez() — salva múltiplos arrays.
+np.savez_compressed() — versão comprimida.
+np.loadtxt() — carrega texto.
+np.savetxt() — salva texto.
+np.genfromtxt() — carrega texto com maior flexibilidade.
+
+Exemplo:
+
+np.save(
+    "dados.npy",
+    array,
+)
+dados = np.load(
+    "dados.npy",
+)
+61. Conversão para Python
+a.tolist() — converte para listas Python.
+a.item() — converte elemento NumPy para tipo Python.
+a.tobytes() — bytes.
+a.astype(...) — conversão de dtype.
+62. Verificação de tipo
+np.isscalar(x) — verifica escalar.
+np.issubdtype(...) — verifica relação entre tipos.
+np.issubclass_() — verifica subclasses de dtype.
+np.iscomplexobj()
+np.isrealobj()
+np.issubdtype(dtype, np.number)
+np.issubdtype(dtype, np.integer)
+np.issubdtype(dtype, np.floating)
+63. Funções de sinal e classificação
+np.sign()
+np.signbit()
+np.copysign()
+np.heaviside()
+64. Funções numéricas adicionais
+np.gcd() — máximo divisor comum.
+np.lcm() — mínimo múltiplo comum.
+np.mod()
+np.remainder()
+np.divmod()
+np.fmod()
+np.maximum()
+np.minimum()
+np.fmax()
+np.fmin().
+65. Funções especiais
+np.clip() — limita valores.
+np.diff() — diferenças.
+np.gradient() — gradiente.
+np.ediff1d() — diferenças entre elementos.
+np.cross() — produto vetorial.
+np.inner() — produto interno.
+np.outer() — produto externo.
+66. Eixos — axis
+
+Um dos conceitos mais importantes do NumPy.
+
+Para:
+
+a = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+])
+
+temos:
+
+shape = (2, 3)
+
+axis=0
+↓
+opera entre as linhas
+resultado por coluna
+
+axis=1
+→
+opera entre as colunas
+resultado por linha
+
+Exemplos:
+
+np.sum(a, axis=0)
+
+Resultado:
+
+[50 70 90]
+
+E:
+
+np.sum(a, axis=1)
+
+Resultado:
+
+[ 60 150]
+67. keepdims
+np.sum(a, axis=1, keepdims=True)
+np.mean(a, axis=0, keepdims=True)
+np.max(a, axis=1, keepdims=True)
+
+Mantém a dimensão do eixo agregado.
+
+Isso é muito importante para operações com broadcasting.
+
+68. einsum
+
+Uma das operações mais poderosas do NumPy:
+
+np.einsum(...)
+
+Pode representar:
+
+produto interno
+multiplicação matricial
+soma ponderada
+operações multidimensionais
+contração de tensores
+
+Exemplo:
+
+np.einsum(
+    "ij,jk->ik",
+    A,
+    B,
+)
+
+equivale, conceitualmente, a:
+
+A @ B
+69. Operações de álgebra tensorial
+np.tensordot()
+np.einsum()
+np.einsum_path()
+np.inner()
+np.outer()
+np.dot()
+np.matmul()
+
+São particularmente relevantes em:
+
+Machine Learning
+Deep Learning
+processamento de imagens
+computação científica.
+70. Performance
+
+Boas práticas:
+
+preferir operações vetorizadas;
+evitar for Python quando houver operação NumPy equivalente;
+evitar np.vectorize() quando performance for o objetivo;
+utilizar dtype apropriado;
+evitar cópias desnecessárias;
+utilizar views quando apropriado;
+trabalhar com operações axis;
+usar broadcasting;
+utilizar arrays contíguos quando necessário;
+utilizar np.linalg para álgebra linear;
+considerar numba para algoritmos que realmente exigem loops.
+71. NumPy × Python
+
+Em vez de:
+
+resultado = []
+
+for valor in valores:
+    resultado.append(valor * 2)
+
+prefira:
+
+resultado = valores * 2
+
+Em vez de:
+
+resultado = []
+
+for valor in valores:
+    if valor > 100:
+        resultado.append(1)
+    else:
+        resultado.append(0)
+
+prefira:
+
+resultado = np.where(
+    valores > 100,
+    1,
+    0,
+)
+72. NumPy × Pandas
+
+Uma distinção importante para seu estudo:
+
+NumPy
+│
+├── ndarray
+├── vetores
+├── matrizes
+├── álgebra linear
+├── operações numéricas
+├── estatística numérica
+├── broadcasting
+├── computação vetorizada
+└── arrays multidimensionais
+
+Enquanto:
+
+Pandas
+│
+├── Series
+├── DataFrame
+├── Index
+├── dados tabulares
+├── dados categóricos
+├── datas
+├── valores ausentes
+├── groupby
+├── merge/join
+├── pivot
+└── ETL/EDA
+
+Na prática:
+
+import numpy as np
+import pandas as pd
+
+df = pd.DataFrame({
+    "vendas": [100, 200, 300],
+    "custos": [50, 120, 180],
+})
+
+df["lucro"] = (
+    df["vendas"].to_numpy()
+    - df["custos"].to_numpy()
+)
+
+Mas muitas vezes o próprio Pandas já resolve:
+
+df["lucro"] = df["vendas"] - df["custos"]
+73. Fluxo NumPy para Data Science
+
+Uma forma útil de visualizar o NumPy:
+
+DADOS
+  ↓
+np.array()
+  ↓
+INSPEÇÃO
+  ↓
+shape
+ndim
+size
+dtype
+  ↓
+LIMPEZA
+  ↓
+isnan()
+isfinite()
+where()
+  ↓
+TRANSFORMAÇÃO
+  ↓
+reshape()
+transpose()
+astype()
+  ↓
+VETORIZAÇÃO
+  ↓
+broadcasting
+ufuncs
+  ↓
+ESTATÍSTICA
+  ↓
+mean()
+median()
+std()
+percentile()
+  ↓
+ÁLGEBRA LINEAR
+  ↓
+dot()
+matmul()
+solve()
+svd()
+  ↓
+MODELAGEM / ANÁLISE
+  ↓
+Pandas / Scikit-learn / SciPy
+74. O que realmente dominar primeiro
+
+Para o seu objetivo de Análise de Dados + Data Science + Engenharia de Dados, eu dividiria o estudo de NumPy em níveis:
+
+Nível 1 — Fundamental
+np.array()
+np.zeros()
+np.ones()
+np.arange()
+np.linspace()
+
+shape
+ndim
+size
+dtype
+
+[]
+[:]
+Nível 2 — Manipulação
+reshape()
+ravel()
+flatten()
+transpose()
+T
+concatenate()
+stack()
+vstack()
+hstack()
+split()
+Nível 3 — Seleção
+indexing
+slicing
+fancy indexing
+boolean indexing
+
+where()
+nonzero()
+argwhere()
+Nível 4 — Computação vetorizada
++
+-
+*
+/
+**
+np.add()
+np.multiply()
+np.sqrt()
+np.exp()
+np.log()
+
+broadcasting
+ufuncs
+Nível 5 — Estatística
+sum()
+mean()
+median()
+std()
+var()
+min()
+max()
+percentile()
+quantile()
+corrcoef()
+cov()
+Nível 6 — Dados
+unique()
+isin()
+sort()
+argsort()
+searchsorted()
+histogram()
+Nível 7 — Valores ausentes
+isnan()
+isfinite()
+isinf()
+nanmean()
+nanmedian()
+nansum()
+nanmin()
+nanmax()
+nan_to_num()
+Nível 8 — Álgebra linear
+dot()
+matmul()
+@
+inv()
+det()
+solve()
+eig()
+svd()
+norm()
+Nível 9 — Estatística e simulação
+default_rng()
+random()
+integers()
+choice()
+normal()
+uniform()
+binomial()
+poisson()
+exponential()
+Nível 10 — Avançado
+einsum()
+tensordot()
+FFT
+polynomial
+structured arrays
+memory views
+broadcasting avançado
+Resumindo a relação entre NumPy e Pandas
+
+Uma boa sequência para seu aprendizado seria:
+
+                    PYTHON
+                       │
+                       ▼
+                    NUMPY
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+       arrays       vetorização   matemática
+          │            │            │
+          └────────────┼────────────┘
+                       ▼
+                    PANDAS
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+      DataFrame      Series       Index
+          │
+          ▼
+       limpeza
+          │
+          ▼
+      transformação
+          │
+          ▼
+       groupby
+          │
+          ▼
+     merge / join
+          │
+          ▼
+       análise
+          │
+          ▼
+     VISUALIZAÇÃO
+          │
+     ┌────┴────┐
+     ▼         ▼
+ Matplotlib   Seaborn
+     │
+     ▼
+ DATA SCIENCE
+     │
+     ▼
+Scikit-learn
+
+Em termos de prioridade: para trabalhar profissionalmente com dados, eu consideraria NumPy + Pandas como a dupla fundamental do ecossistema Python de dados. NumPy fornece a base numérica e vetorizada; Pandas acrescenta a camada tabular, índices, limpeza, agregação e integração de dados.
