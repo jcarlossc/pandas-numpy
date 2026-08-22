@@ -116,92 +116,96 @@
 
 | Instrução | Estrutura | Descrição |
 | --------- | --------- | --------- |
-df.sort_values('valor')	DataFrame	Ordena coluna
-df.sort_values('valor', ascending=False)	DataFrame	Ordem decrescente
-df.sort_values(['cidade','valor'])	DataFrame	Ordena por várias colunas
-df.sort_values(['cidade','valor'], ascending=[True,False])	DataFrame	Ordem diferente por coluna
-df.sort_index()	DataFrame / Series	Ordena pelo índice
-df.sort_index(ascending=False)	DataFrame / Series	Índice decrescente
-s.sort_values()	Series	Ordena valores
-s.sort_index()	Series	Ordena índice
-df.nlargest(5, 'valor')	DataFrame	Maiores registros
-df.nsmallest(5, 'valor')	DataFrame	Menores registros
+| df.sort_values('valor') | DataFrame | Ordena coluna |
+| df.sort_values('valor', ascending=False) | DataFrame | Ordem decrescente |
+| df.sort_values(['cidade','valor']) | DataFrame | Ordena por várias colunas |
+| df.sort_values(['cidade','valor'], ascending=[True,False]) | DataFrame | Ordem diferente por coluna |
+| df.sort_index() | DataFrame / Series | Ordena pelo índice |
+| df.sort_index(ascending=False) | DataFrame / Series | Índice decrescente |
+| s.sort_values() | Series | Ordena valores |
+| s.sort_index() | Series | Ordena índice |
+| df.nlargest(5, 'valor') | DataFrame | Maiores registros |
+| df.nsmallest(5, 'valor') | DataFrame | Menores registros |
 
 ## 6. Índice simples
 
-Instrução	Estrutura	Descrição
-df.index	Index	Obtém índice
-df.index.name	Index	Obtém nome
-df.index.names	Index	Obtém nomes dos níveis
-df.set_index('id')	DataFrame	Define coluna como índice
-df.reset_index()	DataFrame	Converte índice em coluna
-df.reset_index(drop=True)	DataFrame	Remove índice
-df.rename_axis('id')	DataFrame / Index	Renomeia eixo
-df.reindex([...])	DataFrame	Reindexa
-df.reindex(columns=[...])	DataFrame	Reordena/reindexa colunas
-df.index.tolist()	Index	Converte índice em lista
-df.index.unique()	Index	Índices únicos
-df.index.duplicated()	Index	Detecta índices duplicados
-df.index.is_monotonic_increasing	Index	Verifica ordenação crescente
-df.index.is_monotonic_decreasing	Index	Verifica ordenação decrescente
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df.index | Index | Obtém índice |
+| df.index.name | Index | Obtém nome |
+| df.index.names | Index | Obtém nomes dos níveis |
+| df.set_index('id') | DataFrame | Define coluna como índice |
+| df.reset_index() | DataFrame | Converte índice em coluna |
+| df.reset_index(drop=True) | DataFrame | Remove índice |
+| df.rename_axis('id') | DataFrame / Index | Renomeia eixo |
+| df.reindex([...]) | DataFrame | Reindexa |
+| df.reindex(columns=[...]) | DataFrame | Reordena/reindexa colunas |
+| df.index.tolist() | Index | Converte índice em lista |
+| df.index.unique() | Index | Índices únicos |
+| df.index.duplicated() | Index | Detecta índices duplicados |
+| df.index.is_monotonic_increasing | Index | Verifica ordenação crescente |
+| df.index.is_monotonic_decreasing | Index | Verifica ordenação decrescente |
 
 ## 7. MultiIndex / índice hierárquico
 
-Instrução	Estrutura	Descrição
-pd.MultiIndex.from_tuples(...)	Index	Cria índice hierárquico
-pd.MultiIndex.from_arrays(...)	Index	Cria níveis a partir de arrays
-pd.MultiIndex.from_product(...)	Index	Produto cartesiano
-df.set_index(['estado','cidade'])	DataFrame	Cria MultiIndex
-df.reset_index()	DataFrame	Remove MultiIndex
-df.index.levels	MultiIndex	Lista níveis
-df.index.codes	MultiIndex	Códigos dos níveis
-df.index.names	MultiIndex	Nomes dos níveis
-df.xs('PE', level='estado')	DataFrame	Seleciona nível específico
-df.loc['PE']	DataFrame	Seleciona primeiro nível
-df.loc[('PE','Recife')]	DataFrame	Seleciona combinação
-df.swaplevel()	DataFrame	Troca níveis
-df.reorder_levels(...)	DataFrame	Reorganiza níveis
-df.sort_index()	DataFrame	Ordena MultiIndex
-df.droplevel(...)	DataFrame / Index	Remove nível
-df.unstack()	DataFrame	Transforma nível em coluna
-df.stack()	DataFrame	Transforma colunas em índice
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| pd.MultiIndex.from_tuples(...) | Index | Cria índice hierárquico |
+| pd.MultiIndex.from_arrays(...) | Index | Cria níveis a partir de arrays |
+| pd.MultiIndex.from_product(...) | Index | Produto cartesiano |
+| df.set_index(['estado','cidade']) | DataFrame | Cria MultiIndex |
+| df.reset_index() | DataFrame | Remove MultiIndex |
+| df.index.levels | MultiIndex | Lista níveis |
+| df.index.codes | MultiIndex | Códigos dos níveis |
+| df.index.names | MultiIndex | Nomes dos níveis |
+| df.xs('PE', level='estado') | DataFrame | Seleciona nível específico |
+| df.loc['PE'] | DataFrame | Seleciona primeiro nível |
+| df.loc[('PE','Recife')] | DataFrame | Seleciona combinação |
+| df.swaplevel() | DataFrame | Troca níveis |
+| df.reorder_levels(...) | DataFrame | Reorganiza níveis |
+| df.sort_index() | DataFrame | Ordena MultiIndex |
+| df.droplevel(...) | DataFrame / Index | Remove nível |
+| df.unstack() | DataFrame | Transforma nível em coluna |
+| df.stack() | DataFrame | Transforma colunas em índice |
 
 ## 8. Operações com índices
 
-Instrução	Estrutura	Descrição
-df.set_index()	DataFrame	Define índice
-df.reset_index()	DataFrame	Redefine índice
-df.reindex()	DataFrame / Series	Reindexação
-df.rename_axis()	DataFrame / Series	Renomeia índice/eixo
-df.sort_index()	DataFrame / Series	Ordena índice
-df.index.union(other)	Index	União
-df.index.intersection(other)	Index	Interseção
-df.index.difference(other)	Index	Diferença
-df.index.symmetric_difference(other)	Index	Diferença simétrica
-df.index.isin([...])	Index	Verifica pertencimento
-df.index.duplicated()	Index	Detecta duplicidade
-df.index.drop_duplicates()	Index	Remove índices duplicados
-df.index.rename('novo')	Index	Renomeia índice
-df.index.astype(...)	Index	Converte tipo
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df.set_index() | DataFrame | Define índice |
+| df.reset_index() | DataFrame | Redefine índice |
+| df.reindex() | DataFrame / Series | Reindexação |
+| df.rename_axis() | DataFrame / Series | Renomeia índice/eixo |
+| df.sort_index() | DataFrame / Series | Ordena índice |
+| df.index.union(other) | Index | União |
+| df.index.intersection(other) | Index | Interseção |
+| df.index.difference(other) | Index | Diferença |
+| df.index.symmetric_difference(other) | Index | Diferença simétrica |
+| df.index.isin([...]) | Index | Verifica pertencimento |
+| df.index.duplicated() | Index | Detecta duplicidade |
+| df.index.drop_duplicates() | Index | Remove índices duplicados |
+| df.index.rename('novo') | Index | Renomeia índice |
+| df.index.astype(...) | Index | Converte tipo |
 
 ## 9. Valores ausentes
 
-Instrução	Estrutura	Descrição
-df.isna()	DataFrame	Detecta ausentes
-df.isnull()	DataFrame	Alias de isna()
-df.notna()	DataFrame	Detecta não nulos
-df.isna().sum()	DataFrame	Quantidade de ausentes
-df.dropna()	DataFrame / Series	Remove registros com NA
-df.dropna(axis=1)	DataFrame	Remove colunas com NA
-df.dropna(subset=['coluna'])	DataFrame	Remove NA de colunas específicas
-df.dropna(how='all')	DataFrame	Remove somente linhas totalmente vazias
-df.fillna(0)	DataFrame / Series	Substitui NA
-df.fillna({'idade':0})	DataFrame	Valor específico por coluna
-df.ffill()	DataFrame / Series	Propaga valor anterior
-df.bfill()	DataFrame / Series	Propaga próximo valor
-df.interpolate()	DataFrame / Series	Interpolação
-df.replace(np.nan, 0)	DataFrame / Series	Substituição
-df.isna().mean()	DataFrame	Percentual de NA
+| Instrução | Estrutura | Descrição |
+| --------- | --------- | --------- |
+| df.isna() | DataFrame | Detecta ausentes |
+| df.isnull() | DataFrame | Alias de isna() |
+| df.notna() | DataFrame | Detecta não nulos |
+| df.isna().sum() | DataFrame | Quantidade de ausentes |
+| df.dropna() | DataFrame / Series | Remove registros com NA |
+| df.dropna(axis=1) | DataFrame | Remove colunas com NA |
+| df.dropna(subset=['coluna']) | DataFrame | Remove NA de colunas específicas |
+| df.dropna(how='all') | DataFrame | Remove somente linhas totalmente vazias |
+| df.fillna(0) | DataFrame / Series | Substitui NA |
+| df.fillna({'idade':0}) | DataFrame | Valor específico por coluna |
+| df.ffill() | DataFrame / Series | Propaga valor anterior |
+| df.bfill() | DataFrame / Series | Propaga próximo valor |
+| df.interpolate() | DataFrame / Series | Interpolação |
+| df.replace(np.nan, 0) | DataFrame / Series | Substituição |
+| df.isna().mean() | DataFrame | Percentual de NA |
 
 ## 10. Operações com colunas
 
